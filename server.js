@@ -61,5 +61,5 @@ app.server.on('upgrade', (request, socket, head) => {
  *         description: Saludo exitoso.
  */
 app.get('/api/hello', (req, res) => {
-  res.send('¡Hola Mundo desde la API RESTful!');
+  res.send('¡Hola Mundo desde Websocket!');
 });
