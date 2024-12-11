@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cliente WebSocket</title>
+</head>
+<body>
+  <h1>Conexión WebSocket</h1>
+  <button id="connectBtn">Conectar al WebSocket</button>
+  <button id="sendMessageBtn" disabled>Enviar mensaje</button>
+  <p id="message"></p>
+
+  <script>
+    let socket;
+    const connectBtn = document.getElementById('connectBtn');
+    const sendMessageBtn = document.getElementById('sendMessageBtn');
+    const messageDisplay = document.getElementById('message');
+
+    // Conectar al WebSocket
+    connectBtn.addEventListener('click', () => {
+      socket = new WebSocket('ws://localhost:3000');
+      
+      socket.onopen = () => {
+        messageDisplay.textContent = 'Conectado al WebSocket';
+        sendMessageBtn.disabled = false;
+      };
+
+      socket.onmessage = (event) => {
+        messageDisplay.textContent = `Mensaje recibido: ${event.data}`;
+      };
+
+      socket.onerror = (error) => {
+        messageDisplay.textContent = `Error: ${error.message}`;
+      };
+    });
+
+    // Enviar mensaje al WebSocket
+    sendMessageBtn.addEventListener('click', () => {
+      if (socket) {
+        socket.send('Hello from the client!');
+      }
+    });
+  </script>
+</body>
+</html>
